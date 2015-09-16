@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>storytelling homework2 by Siutan</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+</head>
+<body>
+  <h1><strong>Homework2</strong></h1>
+  <h4>State picked: New York, Massachusetts, Colorado, Illinois, New Jersy and California.</h4>
+  <p>bar charts of the total square miles of the state and the percent of the state covered in water</p>
+  <style>
+      p {
+        background-color:lightyellow;
+        font-size:large;
+        font-family: "Times New Roman", Times, serif;
+      }
+      h1 {
+        background-color:lightblue;
+      }
+      h4 {
+        background-color:lightgray;
+      }
+      svg {
+        background-color: #E8E8E8;
+      }
+  </style>
+  <svg width="400" height="250">
+    <rect x="0" y="0" height="15"></rect>
+    <rect x="0" y="20" height="15"></rect>
+    <rect x="0" y="40" height="15"></rect>
+    <rect x="0" y="60" height="15"></rect>
+    <rect x="0" y="80" height="15"></rect>
+    <rect x="0" y="100" height="15"></rect>
+  </svg>
+  
+  <svg width="400" height="250" class="chart"></svg>
+  
+  <script>
+  
+    var statedata = [
+    {'name': 'New York', 'square': 54555, 'water%': 0.136,'land': 47126},
+    {'name': 'Massachusetts', 'square': 10554, 'water%': 0.261,'land': 7800},
+    {'name': 'Colorado', 'square': 104094, 'water%': 0.004,'land': 103642 },
+    {'name': 'Illinois', 'square': 57914, 'water%': 0.041,'land': 55519},
+    {'name': 'New Jersey', 'square': 8723, 'water%': 0.157,'land': 7354},
+    {'name': 'California', 'square': 163695, 'water%': 0.048,'land': 155779},
+    ];
+                
+    d3.selectAll("rect")
+      .data(statedata)
+      .style('fill', '#0000FF')
+      .attr('width', function(d) {
+        return d['water%']*1000;
+      })
+     .attr('height', 20)
+     .attr('x', 50)
+     .attr('y', function(d, i){
+       return i * 30+50;
+     })
+     
+     
+    var svg = d3.select(".chart");
+    var new_rects = svg.selectAll('rect')
+                      .data(statedata)
+                      .enter()
+                      .append('rect')
+                      .attr('width',20)
+                      .attr('height', function(d){return d['square']/1000; })
+                      .attr('x',function(d,i){return i*50 + 50;})
+                      .attr('y',function(d){return 220-d['square']/1000;})
+
+                      .style('fill', function(d) {
+                        if (d['square'] > 50000) {
+                          return 'orange';
+                        }
+                        else {
+                          return 'red';
+                        }
+                      });
+
+
+  </script>
+
+<p><a href="http://water.usgs.gov/edu/wetstates.html">data soure</a></p>
+</body>
+</html>
