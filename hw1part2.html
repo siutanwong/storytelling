@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js">></script>
+</head>
+<body>
+  <svg width="400" height="400">
+    <rect y="10"/>
+    <rect y="40"/>
+    <rect y="70"/>
+    <rect y="100"/>
+    <rect y="130"/>
+  </svg>
+  
+  <svg width="400" height="400">
+      <circle cx="10"></circle>
+      <circle cx="70"></circle>
+      <circle cx="130"></circle>
+      <circle cx="190"></circle>
+      <circle cx="250"></circle>
+    </svg>
+  
+  <script>
+    var rectangles = d3.selectAll("rect");
+    console.log(rectangles);
+    rectangles.style('fill', 'white')
+              .attr('x', 30)
+              .attr('width', 15)
+              .attr('height', 15)
+    
+		var datapoints = [10, 140, 78, 111, 20]
+		rectangles.data(datapoints);
+		rectangles.attr('width', function(d) {
+		  console.log(d);
+		  return (d);
+		})
+		
+		rectangles.attr('width', 0)
+					.transition()
+					.duration(1000)
+					.ease('linear')
+					.style('fill', '#FFBA8C')
+					.attr('width', function(d) {
+						return (d * 2);
+					});
+    
+    var circles = d3.selectAll("circle");
+    console.log(circles);
+
+           
+    var fulldata = [
+      { 'year': 2012, 'sales': 500 },
+      { 'year': 2010, 'sales': 10 },
+      { 'year': 2011, 'sales': 140 },
+      { 'year': 2013, 'sales': 111 },
+      { 'year': 2014, 'sales': 20 },
+    ];
+           
+		circles.data(fulldata);
+		
+		circles.attr('r', function(d) { return Math.sqrt(d['sales']);	})
+		       .attr('cy', 70)
+           .attr('cx',function(d){
+             var returncx;
+             if (d['year'] === 2010) { returncx = 10;}
+             if (d['year'] === 2011) { returncx = 70;}
+             if (d['year'] === 2012) { returncx = 130;}
+             if (d['year'] === 2013) { returncx = 190;}
+             if (d['year'] === 2014) { returncx = 250;}
+              return returncx;
+            })
+
+           .style('fill', function(d) {
+             var returnColor;
+             if (d['year'] === 2014) { returnColor = 'red';
+             } else { returnColor = 'grey'; }
+             return returnColor;
+            })
+
+  </script >
+
+</body>
+</html>
